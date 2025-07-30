@@ -104,7 +104,7 @@ export default function Home() {
           they help the club.
         </p>
 
-        <div className="relative-container">
+        <div className="relative-container flex gap-8">
           {/* Card 1 */}
           <div className="card-tilted card-1">
             <span className="label">President</span>
@@ -136,6 +136,7 @@ export default function Home() {
             <span className="role">Akamksha Ranil</span>
           </div>
         </div>
+
       </section>
 
 
