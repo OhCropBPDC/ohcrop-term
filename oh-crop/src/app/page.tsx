@@ -7,10 +7,12 @@ export default function Home() {
       <section className="w-full h-[320px] relative flex items-start justify-start">
         {/* Background Color Blocks */}
         <div className="absolute inset-0 flex">
-          <div className="w-[28%] h-full bg-[#EA4B19]" />
-          <div className="w-[30%] h-full bg-[#9EB1C0]" />
-          <div className="w-[22%] h-full bg-[#EA4B19]" />
-          <div className="w-[20%] h-full bg-[#9EB1C0]" />
+          <div className="w-240 h-full bg-[#EA4B19]" />
+          <div className="w-240 h-full bg-[#F6C05C]" />
+          <div className="w-240 h-full bg-[#9EB1C0]" />
+          <div className="w-240 h-full bg-[#EA4B19]" />
+          <div className="w-240 h-full bg-[#F6C05C]" />
+          <div className="w-240 h-full bg-[#9EB1C0]" />
         </div>
         {/* Text Content */}
         <div className="relative z-10 px-5 pt-10 max-w-xl">
@@ -22,7 +24,7 @@ export default function Home() {
             Discover our events, learn about our mission, and get in touch!
           </p>
           <a href="/events">
-            <button className="bg-[#1E313F] text-white px-3 py-1.5 rounded shadow text-sm hover:bg-[#0c141a] border border-black">
+            <button className="bg-[#779AB8] text-black px-3 py-1.5 rounded shadow text-sm hover:bg-[#0c141a] border border-[#333333]">
               View our events
             </button>
           </a>

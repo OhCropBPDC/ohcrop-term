@@ -1,21 +1,40 @@
 export default function MembershipPage() {
   return (
-    <section className="bg-gradient-to-r from-orange-500 via-[#F6E0B5] to-[#9EB1C0] flex flex-col items-center justify-center min-h-[60vh] px-4 py-20">
-      <div className="bg-[#F6E0B5] rounded-xl shadow-lg px-10 py-8 flex items-center gap-12 border border-black">
-        <div>
-          <h2 className="text-3xl font-bold mb-3">Become a member</h2>
-          <p className="mb-4 max-w-sm">
-            Outline the advantages and perks of joining the club.
-          </p>
-          <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-2 rounded shadow">Join us</button>
-        </div>
-        <div>
-          {/* Big icon illustration */}
-          <div className="w-32 h-32 rounded bg-pink-200 flex items-center justify-center text-6xl text-green-500 font-semibold" style={{boxShadow:"0 0 0 4px #fff"}}>
-            +
+    <div className="w-full h-screen min-h-[480px] flex items-center justify-center bg-[#7b97ad] relative overflow-hidden">
+      {/* Colored Stripe Background */}
+    <div className="absolute top-0 left-0 w-full h-full z-0 flex">
+      <div className="w-1/6 h-full bg-[#ea4b19]" />
+      <div className="w-1/6 h-full bg-[#efca72]" />
+      <div className="w-1/6 h-full bg-[#7b97ad]" />
+      <div className="w-1/6 h-full bg-[#ea4b19]" />
+      <div className="w-1/6 h-full bg-[#efca72]" />
+      <div className="w-1/6 h-full bg-[#7b97ad]" />
+    </div>
+      {/* Main Card */}
+      <div className="relative z-10 w-full flex justify-center items-center">
+        <div className="bg-[#F9EDDF] rounded-xl border border-black shadow-lg flex flex-row items-center px-10 py-8 max-w-4xl w-full"
+          style={{ minHeight: '340px', maxHeight: '90vh' }}>
+          {/* Left: Text */}
+          <div className="flex-1 flex flex-col justify-between min-w-[210px]">
+            <div>
+              <h2 className="text-4xl font-extrabold text-black mb-1 leading-tight">Become<br />a member</h2>
+              <p className="text-black mb-8 text-[1.12rem] leading-snug">
+                something about the advantages and a jdkn dodn dknajnd kljdkdla dnkjdldk dnlkdnd dnksndkajdn dakjndkajnd akdnll
+              </p>
+            </div>
+            <div className="flex w-full justify-center mt-3">
+              <button className="bg-[#89a8c2] hover:bg-[#617891] border border-black text-black px-10 py-2 rounded shadow font-semibold text-[1.05rem]"
+                style={{ boxShadow: "2px 3px 0 #222" }}>
+                Join us
+              </button>
+            </div>
+          </div>
+          {/* Right: SVG Icon */}
+          <div className="flex-shrink-0 ml-8 flex items-center justify-center min-w-[128px]">
+            <img src="/assets/image.png" alt="calendar" className="w-5 h-70 object-contain mt-1" />
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
