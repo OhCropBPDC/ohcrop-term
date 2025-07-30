@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-[#2D2D2D] text-white flex items-center px-6 py-3 justify-between">
       <div className="flex items-center gap-2">
-        <Image src="/assets/logo.png" alt="OhCrop Logo" width={32} height={32} />
+        <Image src="/assets/ohcrop.png" alt="OhCrop Logo" width={32} height={32} />
         <span className="font-bold text-lg">OhCrop</span>
       </div>
       <div className="flex gap-6">
