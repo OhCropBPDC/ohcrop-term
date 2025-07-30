@@ -31,7 +31,7 @@ export default function MembershipPage() {
           </div>
           {/* Right: SVG Icon */}
           <div className="flex-shrink-0 ml-8 flex items-center justify-center min-w-[128px]">
-            <img src="/assets/image.png" alt="calendar" className="w-5 h-70 object-contain mt-1" />
+            <img src="/assets/image.png" alt="calendar" className="w-55 h-60 object-contain mt-1" />
           </div>
         </div>
       </div>
