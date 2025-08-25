@@ -7,7 +7,8 @@ const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Events", href: "/events" },
-  { label: "Membership", href: "/membership" }
+  { label: "Membership", href: "/membership" },
+  { label: "Gallery", href: "/Gallery" },
 ];
 
 export default function Navbar() {
@@ -19,7 +20,7 @@ export default function Navbar() {
       </div>
       <div className="flex gap-6">
         {navItems.map((item) => (
-          <Link key={item.href} href={item.href} className="hover:underline">
+          <Link key={item.href} href={item.href} className="hover:scale-115 transition-transform duration-200 font-semibold shadow-lg">
             {item.label}
           </Link>
         ))}

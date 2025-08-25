@@ -88,6 +88,7 @@ body {
   font-size: 0.99rem;
   font-weight: 700;
   text-align: left;
+  color: #000;
 }
 
 .card-1 { transform: rotate(-16deg); margin-top: 18px;}
