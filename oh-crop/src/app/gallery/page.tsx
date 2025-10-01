@@ -120,9 +120,6 @@ export default function GalleryPage() {
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
             OhCrop Gallery
           </h1>
-          <p className="text-sm md:text-lg text-white/90">
-            {images.length} images from our events
-          </p>
         </div>
       </div>
 
