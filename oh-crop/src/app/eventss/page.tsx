@@ -18,7 +18,7 @@ export default function GalleryPage() {
     <div className="min-h-screen w-full bg-[#F9EDDF]">
       {/* HERO */}
       <section className="w-full bg-[#7b97ad] py-8">
-        <h2 className="text-4xl font-bold text-black text-center mb-1">Gallery</h2>
+        <h2 className="text-4xl font-bold text-black text-center mb-1">OhCrop Events!!</h2>
         <p className="text-black text-lg text-center mb-4">
           A look back at our events!
         </p>
