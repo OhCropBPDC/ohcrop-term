@@ -7,11 +7,11 @@ export default function Footer() {
       <div className="marquee-container">
         <div className="marquee text-lg font-bold flex items-center h-10 select-none" aria-label="Scrolling OhCrop Welcome">
           {/* Enough spans to seamlessly loop */}
-          <span className="mx-2">😃 OHCROP.WELCOME </span>
-          <span className="mx-2">😃 OHCROP.WELCOME </span>
-          <span className="mx-2">😃 OHCROP.WELCOME </span>
-          <span className="mx-2">😃 OHCROP.WELCOME </span>
-          <span className="mx-2">😃 OHCROP.WELCOME </span>
+          <span className="mx-4">◆ OHCROP.WELCOME</span>
+          <span className="mx-4">◆ OHCROP.WELCOME</span>
+          <span className="mx-4">◆ OHCROP.WELCOME</span>
+          <span className="mx-4">◆ OHCROP.WELCOME</span>
+          <span className="mx-4">◆ OHCROP.WELCOME</span>
         </div>
       </div>
       {/* Socials */}

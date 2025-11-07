@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import TargetCursor from "../components/TargetCursor";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Oh Crop",
@@ -14,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#F6E0B5] min-h-screen flex flex-col">
+        <TargetCursor targetSelector=".cursor-target" />
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
