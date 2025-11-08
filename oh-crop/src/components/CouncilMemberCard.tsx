@@ -1,4 +1,4 @@
-import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 interface SocialLinks {
   instagram?: string;
