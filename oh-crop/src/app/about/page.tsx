@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import CouncilMemberCard from "../../components/CouncilMemberCard";
+import { Suspense, lazy } from "react";
 import DecryptedText from "../../components/DecryptedText";
+
+const CouncilMemberCard = lazy(() => import("../../components/CouncilMemberCard"));
 
 export default function AboutPage() {
   return (
@@ -59,18 +61,18 @@ export default function AboutPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-white text-xl text-center font-semibold mb-8 drop-shadow-lg"
+          className="text-white text-xl text-center font-semibold mb-8 drop-shadow-lg max-sm:text-lg max-sm:px-4"
         >
-        Discover our events, learn about our<br />mission, and get in touch!
+        Discover our events, learn about our<br className="max-sm:hidden" />mission, and get in touch!
         </motion.p>
         
-        <div className="flex flex-row gap-12 justify-center w-full mb-10">
+        <div className="flex flex-row gap-12 justify-center w-full mb-10 max-sm:flex-col max-sm:gap-6 max-sm:px-4">
           {["/assets/gallery/event15.jpg", "/assets/gallery/event11.jpg", "/assets/gallery/event18.jpg"].map((src, i) => (
             <motion.img
               key={i}
               src={src}
               alt={`Gallery ${i + 1}`}
-              className="w-56 h-56 rounded-2xl border-4 border-white/30 shadow-2xl object-cover cursor-target"
+              className="w-56 h-56 rounded-2xl border-4 border-white/30 shadow-2xl object-cover cursor-target max-sm:w-full max-sm:h-48 max-sm:max-w-[340px] max-sm:mx-auto"
               initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
@@ -83,15 +85,15 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex w-full justify-center max-w-5xl px-6 pb-7 flex-row gap-8"
+          className="flex w-full justify-center max-w-5xl px-6 pb-7 flex-row gap-8 max-sm:flex-col max-sm:gap-6 max-sm:px-4"
         >
         <motion.div 
-          className="flex flex-col justify-start items-start w-[340px] cursor-target group"
+          className="flex flex-col justify-start items-start w-[340px] cursor-target group max-sm:w-full max-sm:text-center max-sm:items-center"
           whileHover={{ x: 10 }}
           transition={{ duration: 0.3 }}
         >
-          <span className="text-[#EA4B19] font-black text-4xl mb-3 drop-shadow-lg group-hover:text-white transition-colors duration-300">We do this</span>
-          <span className="block text-white text-xl leading-tight mb-2 text-left font-medium drop-shadow-md">
+          <span className="text-[#EA4B19] font-black text-4xl mb-3 drop-shadow-lg group-hover:text-white transition-colors duration-300 max-sm:text-3xl">We do this</span>
+          <span className="block text-white text-xl leading-tight mb-2 text-left font-medium drop-shadow-md max-sm:text-lg max-sm:text-center">
             Here we can type something<br />
             to tell more about the vision<br />
             of out group or something<br />
@@ -99,12 +101,12 @@ export default function AboutPage() {
           </span>
         </motion.div>
         <motion.div 
-          className="flex flex-col justify-start items-start w-[340px] cursor-target group"
+          className="flex flex-col justify-start items-start w-[340px] cursor-target group max-sm:w-full max-sm:text-center max-sm:items-center"
           whileHover={{ x: 10 }}
           transition={{ duration: 0.3 }}
         >
-          <span className="text-[#EA4B19] font-black text-4xl mb-3 drop-shadow-lg invisible">We do this</span>
-          <span className="block text-white text-xl leading-tight mb-2 text-left font-medium drop-shadow-md">
+          <span className="text-[#EA4B19] font-black text-4xl mb-3 drop-shadow-lg invisible max-sm:text-3xl">We do this</span>
+          <span className="block text-white text-xl leading-tight mb-2 text-left font-medium drop-shadow-md max-sm:text-lg max-sm:text-center">
             continue writing more<br />here
           </span>
         </motion.div>
@@ -163,7 +165,7 @@ export default function AboutPage() {
         </motion.p>
 
 
-        <div className="max-w-7xl mx-auto flex flex-col gap-6 px-4 py-8 relative z-10">
+        <div className="max-w-7xl mx-auto flex flex-col gap-6 px-4 py-8 relative z-10 max-sm:px-2 max-sm:gap-4">
           {/* Core Council */}
           <div className="flex flex-col items-center">
             <motion.div
@@ -172,60 +174,66 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-black text-4xl text-center text-black mb-8 mt-6 cursor-target">Core Council</h3>
+              <h3 className="font-black text-4xl text-center text-black mb-8 mt-6 cursor-target max-sm:text-3xl">Core Council</h3>
               <div className="w-32 h-2 bg-[#EA4B19] rounded-full mx-auto mb-12 animate-pulse-glow" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mb-[-2.5rem] z-10"
+              className="flex justify-center gap-12 mb-[-2.5rem] z-10 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mb-0"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-                <CouncilMemberCard
-                  color="orange"
-                  name="Aimy"
-                  info="President"
-                  imageSrc="/council/Aimy.jpg"
-                  socialLinks={{
-                    instagram: "https://instagram.com/aimy",
-                    linkedin: "https://linkedin.com/in/aimy",
-                    github: "https://github.com",
-                  }}
-                />
-                <CouncilMemberCard
-                  color="blue"
-                  name="Divyansh"
-                  info="Vice President"
-                  imageSrc="/council/Divyansh.jpg"
-                  socialLinks={{
-                    instagram: "https://instagram.com/aimy",
-                    linkedin: "https://linkedin.com/in/aimy",
-                    github: "https://github.com",
-                  }}
-                />
-                <CouncilMemberCard
-                  color="orange"
-                  name="Akamksha"
-                  info="Ex-Officio"
-                  imageSrc="/council/Akamksha.jpeg"
-                  socialLinks={{
-                    instagram: "https://instagram.com/aimy",
-                    linkedin: "https://linkedin.com/in/aimy",
-                    github: "https://github.com",
-                  }}
-                />
+                <Suspense fallback={<div className="w-48 h-64 bg-gray-200 animate-pulse rounded-2xl" />}>
+                  <CouncilMemberCard
+                    color="orange"
+                    name="Aimy"
+                    info="President"
+                    imageSrc="/council/Aimy.jpg"
+                    socialLinks={{
+                      instagram: "https://instagram.com/aimy",
+                      linkedin: "https://linkedin.com/in/aimy",
+                      github: "https://github.com",
+                    }}
+                  />
+                </Suspense>
+                <Suspense fallback={<div className="w-48 h-64 bg-gray-200 animate-pulse rounded-2xl" />}>
+                  <CouncilMemberCard
+                    color="blue"
+                    name="Divyansh"
+                    info="Vice President"
+                    imageSrc="/council/Divyansh.jpg"
+                    socialLinks={{
+                      instagram: "https://instagram.com/aimy",
+                      linkedin: "https://linkedin.com/in/aimy",
+                      github: "https://github.com",
+                    }}
+                  />
+                </Suspense>
+                <Suspense fallback={<div className="w-48 h-64 bg-gray-200 animate-pulse rounded-2xl" />}>
+                  <CouncilMemberCard
+                    color="orange"
+                    name="Akamksha"
+                    info="Ex-Officio"
+                    imageSrc="/council/Akamksha.jpeg"
+                    socialLinks={{
+                      instagram: "https://instagram.com/aimy",
+                      linkedin: "https://linkedin.com/in/aimy",
+                      github: "https://github.com",
+                    }}
+                  />
+                </Suspense>
               </motion.div>
 
             <motion.div 
-              className="flex justify-center gap-12 mt-18 z-0"
+              className="flex justify-center gap-12 mt-18 z-0 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
                 <CouncilMemberCard
                   color="blue"
                   name="Daqsh"
@@ -248,24 +256,24 @@ export default function AboutPage() {
                     github: "https://github.com",
                   }}
                 />
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
             </motion.div>
             </div>
 
           {/* Managers */}
-          <div className="flex flex-col items-center gap-3 mt-12">
+          <div className="flex flex-col items-center gap-3 mt-12 max-sm:mt-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-black text-4xl text-center text-black mb-4 cursor-target">Heads of Teams</h3>
-              <div className="w-32 h-2 bg-[#F6C05C] rounded-full mx-auto mb-12" />
+              <h3 className="font-black text-4xl text-center text-black mb-4 cursor-target max-sm:text-3xl">Heads of Teams</h3>
+              <div className="w-32 h-2 bg-[#F6C05C] rounded-full mx-auto mb-12 max-sm:mb-8" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mb-[-2.5rem] z-10"
+              className="flex justify-center gap-12 mb-[-2.5rem] z-10 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mb-0"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -307,13 +315,13 @@ export default function AboutPage() {
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mt-18 z-0"
+              className="flex justify-center gap-12 mt-18 z-0 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-                <div className="w-[192px]" /> 
+                <div className="w-[192px] max-sm:hidden" /> 
                 <CouncilMemberCard
                   color="orange"
                   name="Mahin"
@@ -325,23 +333,23 @@ export default function AboutPage() {
                     github: "https://github.com",
                   }}
                 />
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
             </motion.div>
           </div>
           {/* Executives */}
-          <div className="flex flex-col items-center gap-3 mt-12">
+          <div className="flex flex-col items-center gap-3 mt-12 max-sm:mt-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-black text-4xl text-center text-black mb-4 mt-6 cursor-target">Executives</h3>
-              <div className="w-32 h-2 bg-[#EA4B19] rounded-full mx-auto mb-12" />
+              <h3 className="font-black text-4xl text-center text-black mb-4 mt-6 cursor-target max-sm:text-3xl max-sm:mt-3">Executives</h3>
+              <div className="w-32 h-2 bg-[#EA4B19] rounded-full mx-auto mb-12 max-sm:mb-8" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mb-[-2.5rem] z-10"
+              className="flex justify-center gap-12 mb-[-2.5rem] z-10 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mb-0"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -383,13 +391,13 @@ export default function AboutPage() {
             </motion.div>
 
             <motion.div 
-              className="flex justify-center gap-12 mt-18 z-0"
+              className="flex justify-center gap-12 mt-18 z-0 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
                 <CouncilMemberCard
                   color="orange"
                   name="Sivani"
@@ -412,11 +420,11 @@ export default function AboutPage() {
                     github: "https://github.com",
                   }}
                 />
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mt-12 z-10"
+              className="flex justify-center gap-12 mt-12 z-10 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -458,13 +466,13 @@ export default function AboutPage() {
             </motion.div>
 
             <motion.div 
-              className="flex justify-center gap-12 mt-18 z-0"
+              className="flex justify-center gap-12 mt-18 z-0 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
                 <CouncilMemberCard
                   color="blue"
                   name="Marwa"
@@ -487,17 +495,17 @@ export default function AboutPage() {
                     github: "https://github.com",
                   }}
                 />
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mt-18 z-0"
+              className="flex justify-center gap-12 mt-18 z-0 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mt-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-                <div className="w-[192px]" /> 
+                <div className="w-[192px] max-sm:hidden" /> 
                 <CouncilMemberCard
                   color="orange"
                   name="Aminta"
@@ -509,23 +517,23 @@ export default function AboutPage() {
                     github: "https://github.com",
                   }}
                 />
-                <div className="w-[192px]" />
+                <div className="w-[192px] max-sm:hidden" />
             </motion.div>
           </div>
           {/* Committee Members */}
-          <div className="flex flex-col items-center gap-3 mt-12">
+          <div className="flex flex-col items-center gap-3 mt-12 max-sm:mt-8">
            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-black text-4xl text-center text-black mb-4 mt-6 cursor-target">Committee Members</h3>
-              <div className="w-32 h-2 bg-[#F6C05C] rounded-full mx-auto mb-12" />
+              <h3 className="font-black text-4xl text-center text-black mb-4 mt-6 cursor-target max-sm:text-3xl max-sm:mt-3">Committee Members</h3>
+              <div className="w-32 h-2 bg-[#F6C05C] rounded-full mx-auto mb-12 max-sm:mb-8" />
             </motion.div>
             
             <motion.div 
-              className="flex justify-center gap-12 mb-[-2.5rem] z-10"
+              className="flex justify-center gap-12 mb-[-2.5rem] z-10 max-sm:flex-col max-sm:items-center max-sm:gap-6 max-sm:mb-0"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -569,15 +577,15 @@ export default function AboutPage() {
             
           </div>
           {/* Faculty */}
-          <div className="flex flex-col items-center gap-3 mt-12">
+          <div className="flex flex-col items-center gap-3 mt-12 max-sm:mt-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-black text-4xl text-center text-black mb-4 cursor-target">Faculty in charge</h3>
-              <div className="w-32 h-2 bg-[#EA4B19] rounded-full mx-auto mb-8" />
+              <h3 className="font-black text-4xl text-center text-black mb-4 cursor-target max-sm:text-3xl">Faculty in charge</h3>
+              <div className="w-32 h-2 bg-[#EA4B19] rounded-full mx-auto mb-8 max-sm:mb-6" />
             </motion.div>
             
             <motion.div 

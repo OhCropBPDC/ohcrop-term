@@ -46,6 +46,7 @@
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 /* Better text rendering */
@@ -53,6 +54,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, img {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img {
+  will-change: transform;
+}
+
+/* Loading skeleton */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
 }
 
 /* Creative animations */
@@ -178,6 +205,46 @@ body {
   }
 }
 
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-marquee {
   animation: marquee 15s linear infinite;
 }
@@ -204,6 +271,24 @@ body {
 
 .animate-glitch {
   animation: glitch 0.3s ease-in-out infinite;
+}
+
+.animate-reveal {
+  animation: reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 1000px 100%;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 20s linear infinite;
 }
 
 /* Stagger animation delays */
@@ -306,55 +391,55 @@ body {
 }
 
 @media (max-width: 640px) {
+  /* Council cards: stack vertically, center, add padding */
   .relative-container {
+    flex-direction: column !important;
     flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    gap: 1rem !important;
-    padding: 0.5rem 0.25rem 1.25rem 0.75rem;
-    margin: 0 !important;
+    align-items: center !important;
     justify-content: flex-start !important;
-    align-items: flex-end !important;
-    scrollbar-width: none;
-  }
-  .relative-container::-webkit-scrollbar {
-    display: none;
+    gap: 1.2rem !important;
+    padding: 0.5rem 0.5rem 1.5rem 0.5rem !important;
+    margin: 0 !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
   }
   .card-tilted {
-    width: 115px !important;
-    min-width: 115px !important;
-    max-width: 80vw !important;
-    height: 135px !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.25rem !important;
-    padding: 0 0.4rem 0.6rem 0.4rem !important;
-    /* Add a gentle tilt for fun, but nothing crazy */
-    box-shadow: 2px 3px 0 #222;
+    width: 90vw !important;
+    min-width: 0 !important;
+    max-width: 340px !important;
+    height: auto !important;
+    margin: 0 auto 1rem auto !important;
+    padding: 1rem !important;
+    box-shadow: 2px 3px 0 #222 !important;
+    border-radius: 1rem !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
-  .card-1 { transform: rotate(-8deg) !important; }
-  .card-2 { transform: rotate(-3deg) !important; }
-  .card-3 { transform: rotate(2deg) !important; }
-  .card-4 { transform: rotate(-2deg) !important; }
-  .card-5 { transform: rotate(7deg) !important; }
+  .card-1, .card-2, .card-3, .card-4, .card-5 {
+    transform: none !important;
+    margin-top: 0 !important;
+  }
   .card-tilted .label {
-    font-size: 9.5px !important;
-    line-height: 1.1 !important;
-    left: 7px !important;
-    top: -12px !important;
+    font-size: 12px !important;
+    left: 10px !important;
+    top: -14px !important;
+    max-width: 90vw !important;
     white-space: normal !important;
-    max-width: 75px;   
-    overflow-wrap: break-word;
+    overflow-wrap: break-word !important;
   }
   .card-tilted .role {
-    font-size: 0.77rem !important;
-    line-height: 1.15;
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
   }
-  /* Reduce size of the image area inside each card */
-  .card-tilted > div {
-    width: 76px !important;
-    height: 54px !important;
-    margin-bottom: 0.5rem !important;
-    margin-top: 1rem !important;
+  .card-tilted img {
+    width: 80vw !important;
+    max-width: 220px !important;
+    height: auto !important;
+    margin-bottom: 0.7rem !important;
+    margin-top: 0.7rem !important;
+    border-radius: 0.75rem !important;
   }
 }
 
@@ -427,11 +512,13 @@ body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+/* Base styles applied without @layer to avoid Tailwind v4 compatibility issues */
+* {
+  border-color: var(--border);
+  outline-color: var(--ring);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
 }

@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Suspense, lazy } from "react";
 import DecryptedText from "../components/DecryptedText";
-import { GridScan } from "../components/GridScan";
+
+const GridScan = lazy(() => import("../components/GridScan").then(mod => ({ default: mod.GridScan })));
 
 export default function Home() {
   return (
@@ -10,22 +12,24 @@ export default function Home() {
       {/* HERO SECTION WITH GRIDSCAN */}
       <section className="w-full min-h-screen relative flex items-center justify-center overflow-hidden">
         {/* GridScan Background */}
-        <div className="absolute inset-0 z-0">
-          <GridScan
-            lineThickness={1.5}
-            linesColor="#392e4e"
-            scanColor="#EA4B19"
-            scanOpacity={0.6}
-            gridScale={0.1}
-            lineJitter={0.2}
-            scanDirection="pingpong"
-            scanDuration={2.5}
-            scanDelay={1}
-            bloomIntensity={0.4}
-            chromaticAberration={0.004}
-            noiseIntensity={0.02}
-          />
-        </div>
+        <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-br from-[#F6E0B5] to-[#F6C05C]" />}>
+          <div className="absolute inset-0 z-0">
+            <GridScan
+              lineThickness={1.5}
+              linesColor="#392e4e"
+              scanColor="#EA4B19"
+              scanOpacity={0.6}
+              gridScale={0.1}
+              lineJitter={0.2}
+              scanDirection="pingpong"
+              scanDuration={2.5}
+              scanDelay={1}
+              bloomIntensity={0.4}
+              chromaticAberration={0.004}
+              noiseIntensity={0.02}
+            />
+          </div>
+        </Suspense>
         
         {/* Animated gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#F6E0B5]/60 via-[#F6C05C]/40 to-[#EA4B19]/30 z-[1]" />
@@ -55,7 +59,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <DecryptedText
               text="Welcome to Oh Crop"
@@ -71,7 +75,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="mb-8"
           >
             <h2 className="text-3xl md:text-5xl font-bold text-[#EA4B19] mb-4 cursor-target">
@@ -85,7 +89,9 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: "backOut" }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            whileTap={{ scale: 0.95 }}
           >
             <a href="/eventss">
               <button className="cursor-target group relative bg-[#EA4B19] text-white px-12 py-5 rounded-2xl shadow-2xl text-xl font-bold overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-105 border-2 border-black/10">
@@ -223,16 +229,19 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
               whileHover={{ y: -10, scale: 1.02 }}
               className="cursor-target group w-80 h-[450px] bg-gradient-to-br from-[#f3bc57] to-[#f5a82b] border-2 border-black/20 rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <img
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <motion.img
                 src="/assets/gallery/event1.jpg"
                 alt="Adobe Premiere Pro Workshop"
-                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl group-hover:scale-105 transition-transform duration-300 relative z-10"
+                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl relative z-10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                loading="lazy"
               />
               <div className="w-[85%] flex flex-col mt-2 relative z-10">
                 <span className="text-3xl font-black text-[#974638] mb-3">Workshops</span>
@@ -252,15 +261,18 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="cursor-target group w-80 h-[450px] bg-gradient-to-br from-[#f3bc57] to-[#f5a82b] border-2 border-black/20 rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden animate-float"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <img
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <motion.img
                 src="/assets/gallery/event26.jpg"
                 alt="Annual PTC event"
-                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl group-hover:scale-105 transition-transform duration-300 relative z-10"
+                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl relative z-10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                loading="lazy"
               />
               <div className="w-[85%] flex flex-col mt-2 relative z-10">
                 <span className="text-3xl font-black text-[#974638] mb-3">Games</span>
@@ -280,16 +292,19 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               whileHover={{ y: -10, scale: 1.02 }}
               className="cursor-target group w-80 h-[450px] bg-gradient-to-br from-[#f3bc57] to-[#f5a82b] border-2 border-black/20 rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <img
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <motion.img
                 src="/assets/gallery/event27.png"
                 alt="11/9 Orientation"
-                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl group-hover:scale-105 transition-transform duration-300 relative z-10"
+                className="mt-8 mb-6 w-[85%] h-40 rounded-2xl border-2 border-black/10 object-cover shadow-xl relative z-10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                loading="lazy"
               />
               <div className="w-[85%] flex flex-col mt-2 relative z-10">
                 <span className="text-3xl font-black text-[#974638] mb-3">Fun Activities</span>
@@ -364,22 +379,23 @@ export default function Home() {
                 key={idx}
                 initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
                 whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: member.delay }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: member.delay, ease: [0.25, 0.46, 0.45, 0.94] }}
                 whileHover={{ y: -15, rotateY: 5, scale: 1.05 }}
-                className="cursor-target group bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-[#e0e0e0] flex flex-col items-center p-8 w-72 relative overflow-hidden"
+                className="cursor-target group bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border-2 border-[#e0e0e0] flex flex-col items-center p-8 w-72 relative overflow-hidden"
                 style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#EA4B19]/0 to-[#EA4B19]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="uppercase text-xs tracking-widest text-[#EA4B19] font-bold mb-4 bg-[#EA4B19]/10 px-4 py-2 rounded-full relative z-10 group-hover:bg-[#EA4B19] group-hover:text-white transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#EA4B19]/0 to-[#EA4B19]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="uppercase text-xs tracking-widest text-[#EA4B19] font-bold mb-4 bg-[#EA4B19]/10 px-4 py-2 rounded-full relative z-10 group-hover:bg-[#EA4B19] group-hover:text-white transition-all duration-500">
                   {member.role}
                 </span>
                 <motion.img
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4 }}
                   src={member.img}
                   alt={member.name}
-                  className="w-36 h-36 rounded-full border-4 border-[#F6C05C] object-cover shadow-xl mb-5 group-hover:border-[#EA4B19] transition-all duration-300 relative z-10"
+                  className="w-36 h-36 rounded-full border-4 border-[#F6C05C] object-cover shadow-xl mb-5 group-hover:border-[#EA4B19] transition-all duration-500 relative z-10"
+                  loading="lazy"
                 />
                 <span className="mt-2 text-2xl font-bold text-[#212121] text-center relative z-10">
                   {member.name}
