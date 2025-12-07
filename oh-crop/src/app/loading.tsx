@@ -26,7 +26,12 @@ export default function Loading() {
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-xl opacity-50" />
           
           <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 flex items-center justify-center shadow-2xl border-4 border-white/20">
-            <span className="text-4xl font-bold text-white">OC</span>
+            <img
+              src="/assets/ohcrop.png"
+              alt="OhCrop Logo"
+              className="w-16 h-16 object-contain drop-shadow-lg"
+              style={{ filter: 'brightness(1.1) contrast(1.1)' }}
+            />
           </div>
         </motion.div>
 

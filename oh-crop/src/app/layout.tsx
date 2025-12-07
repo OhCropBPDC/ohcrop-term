@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import React, { Suspense } from "react";
 import Footer from "../components/Footer";
 import InitialLoader from "../components/InitialLoader";
-import React, { Suspense } from "react";
-const BubbleMenu = React.lazy(() => import("../components/BubbleMenu"));
 import "./globals.css";
+const BubbleMenu = React.lazy(() => import("../components/BubbleMenu"));
 
 export const metadata: Metadata = {
   title: "Oh Crop",

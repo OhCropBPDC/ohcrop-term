@@ -69,13 +69,14 @@ export default function InitialLoader() {
 
               {/* Logo */}
               <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 flex items-center justify-center shadow-2xl border-4 border-white/30">
-                <motion.span
-                  className="text-5xl font-bold text-white"
+                <motion.img
+                  src="/assets/ohcrop.png"
+                  alt="OhCrop Logo"
+                  className="w-16 h-16 object-contain drop-shadow-lg"
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  OC
-                </motion.span>
+                  style={{ filter: 'brightness(1.1) contrast(1.1)' }}
+                />
               </div>
             </motion.div>
 

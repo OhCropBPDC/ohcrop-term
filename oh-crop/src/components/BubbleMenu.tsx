@@ -1,8 +1,8 @@
 "use client";
+import { gsap } from 'gsap';
+import { useRouter } from 'next/navigation';
 import type { CSSProperties, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { gsap } from 'gsap';
 
 type MenuItem = {
   label: string;

@@ -14,7 +14,6 @@ export default function Home() {
     <div className="w-full min-h-screen flex flex-col font-sans overflow-x-hidden -mt-[76px]">
       {/* HERO SECTION WITH VIDEO BACKGROUND */}
       <section className="w-full min-h-screen relative flex items-center justify-center overflow-hidden">
-        {/* Video Background - REPLACE '/video/trailer.mp4' with your actual video path */}
         <VideoBackground 
           videoSrc="/video/trailer.mp4" 
           fallbackImage="/assets/hero-fallback.jpg"
