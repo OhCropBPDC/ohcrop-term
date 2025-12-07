@@ -43,70 +43,27 @@ const GALLERY_IMAGES = [
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const imageObjects = GALLERY_IMAGES.map((filename, index) => ({
-          id: `img-${index}`,
-          img: `/assets/gallery/${filename}`,
-          url: `/assets/gallery/${filename}`,
-          height: 300 + Math.floor(Math.random() * 300),
-          filename
-        }));
+    // Optimize: Don't pre-validate images, let lazy loading handle it
+    const imageObjects = GALLERY_IMAGES.map((filename, index) => ({
+      id: `img-${index}`,
+      img: `/assets/gallery/${filename}`,
+      url: `/assets/gallery/${filename}`,
+      height: 300 + Math.floor(Math.random() * 300),
+      filename
+    }));
 
-        const validImages = await Promise.all(
-          imageObjects.map(async (img) => {
-            return new Promise<GalleryImage | null>((resolve) => {
-              const testImage = new Image();
-              testImage.onload = () => resolve(img);
-              testImage.onerror = () => resolve(null);
-              testImage.src = img.img;
-            });
-          })
-        );
-
-        const filteredImages = validImages.filter((img): img is GalleryImage => img !== null);
-        setImages(filteredImages);
-      } catch (err) {
-        setError('Failed to load images');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadImages();
+    setImages(imageObjects);
+    setLoading(false);
   }, []);
 
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-[#7b97ad] to-[#ea4b19]">
         <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-lg font-semibold">Loading Gallery...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-[#7b97ad] to-[#ea4b19]">
-        <div className="text-white text-center">
-          <p className="text-xl font-bold mb-4">Error Loading Gallery</p>
-          <p className="text-lg">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (images.length === 0) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-[#7b97ad] to-[#ea4b19]">
-        <div className="text-white text-center">
-          <p className="text-xl font-bold mb-4">No Images Found</p>
-          <p className="text-lg">Add some images to the /public/assets/gallery/ folder</p>
         </div>
       </div>
     );
@@ -115,7 +72,7 @@ export default function GalleryPage() {
   return (
     <div className="w-full h-screen flex flex-col bg-gradient-to-br from-[#7b97ad] via-[#efca72] to-[#ea4b19]">
       {/* Header - Fixed at top */}
-      <div className="flex-shrink-0 px-4 py-6 border-b border-white/20">
+      <div className="flex-shrink-0 px-4 py-6 border-b border-white/20 pt-32">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
             OhCrop Gallery

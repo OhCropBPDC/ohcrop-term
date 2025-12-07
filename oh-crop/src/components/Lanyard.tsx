@@ -1,18 +1,17 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { Environment, Lightformer, Text } from '@react-three/drei';
 import { Canvas, extend, useFrame, type ThreeElement } from '@react-three/fiber';
-import { Environment, Lightformer } from '@react-three/drei';
-import { Text } from '@react-three/drei';
 import {
-  BallCollider,
-  CuboidCollider,
-  Physics,
-  RigidBody,
-  useRopeJoint,
-  useSphericalJoint,
-  RigidBodyProps
+    BallCollider,
+    CuboidCollider,
+    Physics,
+    RigidBody,
+    RigidBodyProps,
+    useRopeJoint,
+    useSphericalJoint
 } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 // Extend THREE elements for React Three Fiber
@@ -33,6 +32,18 @@ interface LanyardProps {
   fov?: number;
   transparent?: boolean;
   onCardClick?: () => void;
+}
+
+
+import { Loader } from '@react-three/drei';
+import { useMemo } from 'react';
+
+// Util: Load OhCrop logo as texture
+function useLogoTexture() {
+  return useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    return loader.load('/assets/ohcrop.png');
+  }, []);
 }
 
 export default function Lanyard({
@@ -84,6 +95,8 @@ export default function Lanyard({
           />
         </Environment>
       </Canvas>
+        {/* Drei Loader for asset loading feedback */}
+        <Loader />
     </div>
   );
 }
@@ -95,6 +108,8 @@ interface BandProps {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 0, onCardClick }: BandProps) {
+    // Get logo texture once per render
+    const logoTexture = useLogoTexture();
   const band = useRef<THREE.Mesh>(null);
   const fixed = useRef<any>(null);
   const j1 = useRef<any>(null);
@@ -262,48 +277,54 @@ function Band({ maxSpeed = 50, minSpeed = 0, onCardClick }: BandProps) {
             <mesh>
               <RoundedBoxGeometry args={[1.6, 2.25, 0.02]} radius={0.05} smoothness={4} />
               <meshPhysicalMaterial
-                color="#F9EDDF"
+                color="#fff"
                 clearcoat={1}
-                clearcoatRoughness={0.15}
-                roughness={0.1}
-                metalness={0}
+                clearcoatRoughness={0.12}
+                roughness={0.08}
+                metalness={0.05}
               />
             </mesh>
-            
+
             {/* Card Content */}
-            <group position={[0, 0, 0.015]}>
-              {/* Decorative elements */}
-              <mesh position={[-0.6, 0.6, 0]}>
-                <circleGeometry args={[0.05]} />
+            <group position={[0, 0, 0.016]}>
+              {/* OhCrop Logo */}
+              <mesh position={[0, 0.65, 0.01]} scale={[0.45, 0.45, 0.45]}>
+                <planeGeometry args={[0.7, 0.7]} />
+                <meshBasicMaterial transparent map={logoTexture} />
+              </mesh>
+              {/* Decorative line */}
+              <mesh position={[0, 0.38, 0.01]}>
+                <planeGeometry args={[1.1, 0.025]} />
                 <meshBasicMaterial color="#ea4b19" />
               </mesh>
-              <mesh position={[0.6, 0.6, 0]}>
-                <circleGeometry args={[0.05]} />
-                <meshBasicMaterial color="#efca72" />
-              </mesh>
-              
               {/* COMING SOON Text */}
               <Text
-                position={[0, 0.2, 0.1]}
+                position={[0, 0.13, 0.1]}
                 fontSize={0.15}
-                color="#000000"
+                color="#222"
                 anchorX="center"
                 anchorY="middle"
                 maxWidth={1.2}
+                fontWeight={700}
               >
                 COMING SOON
               </Text>
-
               {/* Company Name */}
               <Text
-                position={[0, -0.3, 0.1]}
-                fontSize={0.08}
+                position={[0, -0.32, 0.1]}
+                fontSize={0.09}
                 color="#ea4b19"
                 anchorX="center"
                 anchorY="middle"
+                fontWeight={600}
               >
                 OHCROP
               </Text>
+              {/* Subtle shadow for depth */}
+              <mesh position={[0, -0.6, 0]}>
+                <planeGeometry args={[1.2, 0.08]} />
+                <meshBasicMaterial color="#000" opacity={0.08} transparent />
+              </mesh>
             </group>
 
             

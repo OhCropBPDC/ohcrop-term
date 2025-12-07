@@ -2,7 +2,7 @@ import SocialIcons from "./SocialIcons";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-black text-white flex flex-col items-center m-0 p-0">
+    <footer className="w-full bg-[#0A0E27] text-white flex flex-col items-center m-0 p-0 border-t border-white/10">
       {/* Marquee */}
       <div className="marquee-container">
         <div className="marquee text-lg font-bold flex items-center h-10 select-none" aria-label="Scrolling OhCrop Welcome">

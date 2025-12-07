@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "../components/Footer";
+import InitialLoader from "../components/InitialLoader";
 import Navbar from "../components/Navbar";
-import TargetCursor from "../components/TargetCursor";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,8 +14,8 @@ export default function RootLayout({
 }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-[#F6E0B5] min-h-screen flex flex-col">
-        <TargetCursor targetSelector=".cursor-target" />
+      <body className="bg-[#0A0E27] min-h-screen flex flex-col antialiased">
+        <InitialLoader />
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

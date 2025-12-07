@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
   const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
@@ -30,19 +30,6 @@ const useMeasure = <T extends HTMLElement>() => {
   }, []);
 
   return [ref, size] as const;
-};
-
-const preloadImages = async (urls: string[]): Promise<void> => {
-  await Promise.all(
-    urls.map(
-      src =>
-        new Promise<void>(resolve => {
-          const img = new Image();
-          img.src = src;
-          img.onload = img.onerror = () => resolve();
-        })
-    )
-  );
 };
 
 interface Item {
@@ -121,7 +108,8 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    // Skip preloading - let browser handle lazy loading
+    setImagesReady(true);
   }, [items]);
 
   const grid = useMemo<GridItem[]>(() => {
@@ -215,25 +203,30 @@ const Masonry: React.FC<MasonryProps> = ({
 
   return (
     <div ref={containerRef} className="relative w-full">
-      {/* Remove h-full if it exists */}
       {grid.map(item => (
         <div
           key={item.id}
           data-key={item.id}
-          className="absolute box-content"
+          className="absolute box-content cursor-pointer"
           style={{ 
-            willChange: 'transform, width, height, opacity'
+            willChange: 'transform, opacity'
           }}
           onClick={() => window.open(item.url, '_blank', 'noopener')}
           onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
           onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
         >
           <div
-            className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)]"
-            style={{ backgroundImage: `url(${item.img})` }}
+            className="relative w-full h-full rounded-lg shadow-lg overflow-hidden"
           >
+            <img 
+              src={item.img} 
+              alt={item.id}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              style={{ willChange: 'transform' }}
+            />
             {colorShiftOnHover && (
-              <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+              <div className="color-overlay absolute inset-0 bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
             )}
           </div>
         </div>

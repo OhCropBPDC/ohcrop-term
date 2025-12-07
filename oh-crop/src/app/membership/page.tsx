@@ -1,65 +1,52 @@
+
 'use client';
-import { useState } from 'react';
-import Lanyard from '../../components/Lanyard'; // Adjust path as needed
+import { Suspense, lazy, useState } from 'react';
+const Lanyard = lazy(() => import('../../components/Lanyard'));
+
 
 export default function MembershipPage() {
   const [showLanyard, setShowLanyard] = useState(true);
 
   const handleJoinClick = () => {
-    // Replace with your Google Form URL
-    window.open('https://forms.google.com/your-form-url', '_blank');
-    
-    // Optional: Show a toast or feedback that the form is opening
-    console.log('Opening membership application form...');
+    // window.open('https://forms.google.com/your-form-url', '_blank');
+    // console.log('Opening membership application form...');
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#7b97ad] relative overflow-hidden">
-      {/* Colored Stripe Background */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 flex">
-        <div className="w-1/6 h-full bg-[#ea4b19]" />
-        <div className="w-1/6 h-full bg-[#efca72]" />
-        <div className="w-1/6 h-full bg-[#7b97ad]" />
-        <div className="w-1/6 h-full bg-[#ea4b19]" />
-        <div className="w-1/6 h-full bg-[#efca72]" />
-        <div className="w-1/6 h-full bg-[#7b97ad]" />
+    <div className="min-h-screen w-full relative overflow-hidden flex flex-col items-center justify-center bg-about-gradient">
+      {/* Animated About-style background with creative hand-coded CSS animation */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="ohcrop-bg-animated w-full h-full" />
       </div>
 
-      {/* Centered Lanyard hanging from navbar */}
-      {showLanyard && (
-        <Lanyard
-          position={[0, 0, 20]}
-          gravity={[0, -30, 0]}
-          fov={25}
-          transparent={true}
-          onCardClick={handleJoinClick}
-        />
-      )}
-
-      {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row items-center justify-center min-h-[600px] gap-8 lg:gap-16">
-
-          {/* Right Side - Placeholder or additional content */}
-          <div className="flex-1 order-1 lg:order-2 relative">
-            {!showLanyard && (
-              <div className="w-full h-[500px] lg:h-[600px] relative flex items-center justify-center">
-                <div className="text-white text-center">
-                  <div className="bg-black/20 backdrop-blur-sm rounded-lg px-6 py-4">
-                    <p className="mb-4 text-lg">Loading 3D lanyard...</p>
-                    <button 
-                      onClick={() => setShowLanyard(true)}
-                      className="bg-[#F9EDDF] text-black px-6 py-3 rounded-lg border border-black hover:bg-opacity-90 transition-all duration-200 font-semibold"
-                    >
-                      Show Lanyard
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Lanyard/ID Card - lazy loaded, animated */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-[600px] w-full py-12 animate-fadein">
+        <Suspense fallback={<div className="w-full h-[500px] flex items-center justify-center text-white text-xl">Loading ID Card...</div>}>
+          {showLanyard && (
+            <Lanyard
+              position={[0, 0, 20]}
+              gravity={[0, -30, 0]}
+              fov={25}
+              transparent={true}
+              onCardClick={handleJoinClick}
+            />
+          )}
+        </Suspense>
       </div>
+
+      {/* Main Content - call to action */}
+      {/* <div className="relative z-20 w-full max-w-2xl mx-auto px-4 py-8 flex flex-col items-center">
+        <h2 className="text-4xl font-black text-white mb-4 drop-shadow-lg tracking-tight text-center">Become a Member</h2>
+        <p className="text-lg text-gray-200 mb-6 text-center max-w-xl">
+          Join OhCrop to access exclusive events, creative resources, and a vibrant design community. Tap the ID card to apply!
+        </p>
+        <button
+          onClick={handleJoinClick}
+          className="bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:scale-105 transition-transform duration-200"
+        >
+          Apply for Membership
+        </button>
+      </div> */}
 
       {/* Mobile Instructions */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 lg:hidden z-20">
