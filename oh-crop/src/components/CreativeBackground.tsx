@@ -138,9 +138,9 @@ export default function CreativeBackground() {
                 style={{
                   width: 0,
                   height: 0,
-                  borderLeft: `${shape.size / 2}px solid transparent`,
-                  borderRight: `${shape.size / 2}px solid transparent`,
-                  borderBottom: `${shape.size}px solid currentColor`,
+                  borderLeft: `${(shape.size ?? 40) / 2}px solid transparent`,
+                  borderRight: `${(shape.size ?? 40) / 2}px solid transparent`,
+                  borderBottom: `${shape.size ?? 40}px solid currentColor`,
                 }}
               />
             </motion.div>
