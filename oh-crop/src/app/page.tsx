@@ -11,9 +11,9 @@ import VideoBackground from "../components/VideoBackground";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen flex flex-col font-sans overflow-x-hidden -mt-[76px]">
+    <div className="w-full min-h-screen flex flex-col font-sans overflow-x-hidden">
       {/* HERO SECTION WITH VIDEO BACKGROUND */}
-      <section className="w-full min-h-screen relative flex items-center justify-center overflow-hidden">
+      <section className="w-full min-h-screen relative flex items-center justify-center overflow-hidden p-0 m-0">
         <VideoBackground 
           videoSrc="/video/trailer.mp4" 
           fallbackImage="/assets/hero-fallback.jpg"
