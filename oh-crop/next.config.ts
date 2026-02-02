@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
+  // Turbopack configuration (empty to acknowledge migration from webpack)
+  turbopack: {},
   // Handle Node.js modules in browser
   webpack: (config) => {
     config.resolve.fallback = {
