@@ -4,11 +4,14 @@ import Footer from "../components/Footer";
 import InitialLoader from "../components/InitialLoader";
 import MerchPopup from "../components/MerchPopup";
 import "./globals.css";
+
+// Dynamic import for BubbleMenu
 const BubbleMenu = React.lazy(() => import("../components/BubbleMenu"));
 
 export const metadata: Metadata = {
-  title: "Oh Crop",
-  description: "Connecting Our Community - Oh Crop Club",
+  title: "Oh Crop - Design Club",
+  description: "Connecting Our Community - Oh Crop Club at BITS Pilani Dubai Campus",
+  keywords: ["Design", "Club", "BITS Pilani", "Dubai", "Creative", "Community"],
 };
 
 export default function RootLayout({
@@ -19,9 +22,9 @@ export default function RootLayout({
       <body className="bg-[#0A0E27] min-h-screen flex flex-col antialiased">
         <InitialLoader />
         <MerchPopup />
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className="fixed top-4 right-4 w-12 h-12" />}>
           <BubbleMenu
-            logo={<img src="/assets/ohcrop.png" alt="OhCrop Logo" style={{ width: 48, height: 48, borderRadius: '50%' }} />}
+            logo={<img src="/assets/ohcrop.png" alt="OhCrop Logo" width={48} height={48} className="rounded-full" />}
             items={[
               { label: "Home", href: "/", ariaLabel: "Home", rotation: -8, hoverStyles: { bgColor: "#6366F1", textColor: "#fff" } },
               { label: "About", href: "/about", ariaLabel: "About", rotation: 8, hoverStyles: { bgColor: "#ea4b19", textColor: "#fff" } },

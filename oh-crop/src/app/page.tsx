@@ -1,13 +1,60 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { memo } from "react";
 import {
-  FloatingShape,
-  HolographicCard,
-  MorphingBlob,
-  ParticleField
+    FloatingShape,
+    HolographicCard,
+    MorphingBlob,
+    ParticleField
 } from "../components/CreativeEffects";
 import VideoBackground from "../components/VideoBackground";
+
+// Memoized button to prevent unnecessary re-renders
+const CTAButton = memo(function CTAButton({ 
+  href, 
+  children, 
+  variant = "primary" 
+}: { 
+  href: string; 
+  children: React.ReactNode; 
+  variant?: "primary" | "secondary" 
+}) {
+  if (variant === "primary") {
+    return (
+      <a href={href}>
+        <motion.button
+          className="group relative px-10 py-5 bg-white text-black font-bold text-lg rounded-full overflow-hidden shadow-2xl"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            {children}
+            <span>→</span>
+          </span>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-[#6366F1] to-[#EC4899]"
+            initial={{ x: "100%" }}
+            whileHover={{ x: 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        </motion.button>
+      </a>
+    );
+  }
+
+  return (
+    <a href={href}>
+      <motion.button
+        className="px-10 py-5 bg-black/40 backdrop-blur-md text-white font-bold text-lg rounded-full border-2 border-white/40 hover:bg-black/60 hover:border-white/60 transition-all duration-300 shadow-xl"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {children}
+      </motion.button>
+    </a>
+  );
+});
 
 export default function Home() {
   return (
@@ -24,7 +71,7 @@ export default function Home() {
         <ParticleField />
         
         
-        {/* Floating Shapes - Reduced for performance */}
+        {/* Floating Shapes - Only 2 for performance */}
         <FloatingShape 
           delay={0} 
           duration={25} 
@@ -106,62 +153,32 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
-              <a href="/eventss">
-                <motion.button
-                  className="group relative px-10 py-5 bg-white text-black font-bold text-lg rounded-full overflow-hidden shadow-2xl"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Explore Events
-                    <motion.span
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      →
-                    </motion.span>
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#6366F1] to-[#EC4899]"
-                    initial={{ x: "100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
-              </a>
+              <CTAButton href="/eventss" variant="primary">
+                Explore Events
+              </CTAButton>
               
-              <a href="/membership">
-                <motion.button
-                  className="px-10 py-5 bg-black/40 backdrop-blur-md text-white font-bold text-lg rounded-full border-2 border-white/40 hover:bg-black/60 hover:border-white/60 transition-all duration-300 shadow-xl"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Join Community
-                </motion.button>
-              </a>
+              <CTAButton href="/membership" variant="secondary">
+                Join Community
+              </CTAButton>
             </motion.div>
           </div>
         </div>
         
-        {/* Scroll indicator */}
+        {/* Simplified scroll indicator - no nested animations */}
         <motion.div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, 12, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <motion.div
-              className="w-2 h-2 bg-white/60 rounded-full mt-2"
-              animate={{ y: [0, 18, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+            <div className="w-2 h-2 bg-white/60 rounded-full" />
           </div>
         </motion.div>
       </section>
 
       {/* WHAT IS OH CROP SECTION */}
       <section className="w-full bg-gradient-to-br from-[#1A1F3A] via-[#2D3561] to-[#1A1F3A] py-32 flex flex-col items-center px-4 md:px-0 relative overflow-hidden">
-        {/* Animated background elements */}
+        {/* Simplified background - only 1 floating shape for performance */}
         <FloatingShape 
           delay={1} 
           duration={18} 
@@ -169,14 +186,6 @@ export default function Home() {
           color="rgba(99, 102, 241, 0.08)" 
           initialX="80%" 
           initialY="20%" 
-        />
-        <FloatingShape 
-          delay={3} 
-          duration={20} 
-          size={400} 
-          color="rgba(236, 72, 153, 0.08)" 
-          initialX="10%" 
-          initialY="70%" 
         />
         
         <div className="relative z-10 max-w-5xl mx-auto">
@@ -189,18 +198,7 @@ export default function Home() {
             <h2 className="text-5xl md:text-7xl font-black mb-8 text-white text-center cursor-target">
               What is Oh Crop?
             </h2>
-            <motion.div 
-              className="w-32 h-1 bg-gradient-to-r from-[#6366F1] via-[#8B5CF6] to-[#EC4899] rounded-full mx-auto mb-12"
-              animate={{
-                scale: [1, 1.2, 1],
-                boxShadow: [
-                  "0 0 20px rgba(99, 102, 241, 0.5)",
-                  "0 0 40px rgba(236, 72, 153, 0.7)",
-                  "0 0 20px rgba(99, 102, 241, 0.5)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
+            <div className="w-32 h-1 bg-gradient-to-r from-[#6366F1] via-[#8B5CF6] to-[#EC4899] rounded-full mx-auto mb-12" />
           </motion.div>
           
           <HolographicCard className="glass-card p-12 rounded-3xl mb-8 backdrop-blur-xl group">
@@ -229,7 +227,7 @@ export default function Home() {
             <a href="/membership" className="inline-block cursor-target group">
               <motion.button 
                 className="relative gradient-pink text-white px-16 py-7 rounded-2xl shadow-2xl border border-white/20 transition-all duration-300 font-black text-2xl overflow-hidden"
-                whileHover={{ scale: 1.05, rotate: 1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10">Join Our Community</span>
@@ -240,17 +238,6 @@ export default function Home() {
                   transition={{ duration: 0.3 }}
                   style={{ zIndex: 0 }}
                 />
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{
-                    boxShadow: [
-                      "0 0 20px rgba(236, 72, 153, 0.5)",
-                      "0 0 40px rgba(239, 68, 68, 0.7)",
-                      "0 0 20px rgba(236, 72, 153, 0.5)",
-                    ],
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
               </motion.button>
             </a>
           </motion.div>
@@ -259,22 +246,14 @@ export default function Home() {
 
       {/* WHAT WE HAVE BEEN UP TO SECTION */}
       <section className="bg-gradient-to-br from-[#0A0E27] via-[#1A1F3A] to-[#0A0E27] py-32 flex flex-col items-center relative overflow-hidden">
-        {/* Animated background */}
+        {/* Simplified animated background - slower animations */}
         <motion.div
           className="absolute top-10 left-10 w-96 h-96 bg-[#06B6D4]/10 rounded-full blur-3xl"
           animate={{
             x: [0, 60, 0],
             y: [0, 40, 0],
           }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-10 right-10 w-96 h-96 bg-[#6366F1]/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, -60, 0],
-            y: [0, -40, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4">
@@ -297,7 +276,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              whileHover={{ y: -15, scale: 1.03 }}
+              whileHover={{ y: -10, scale: 1.02 }}
               className="cursor-target group w-80 glass-card rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden p-6 border border-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#6366F1]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -305,8 +284,6 @@ export default function Home() {
                 src="/assets/gallery/event1.jpg"
                 alt="Workshops"
                 className="mt-4 mb-6 w-full h-48 rounded-2xl object-cover shadow-xl relative z-10"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
                 loading="lazy"
               />
               <div className="w-full flex flex-col mt-2 relative z-10">
@@ -323,7 +300,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              whileHover={{ y: -15, scale: 1.03 }}
+              whileHover={{ y: -10, scale: 1.02 }}
               className="cursor-target group w-80 glass-card rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden p-6 border border-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#EC4899]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -331,8 +308,6 @@ export default function Home() {
                 src="/assets/gallery/event11.jpg"
                 alt="Community Events"
                 className="mt-4 mb-6 w-full h-48 rounded-2xl object-cover shadow-xl relative z-10"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
                 loading="lazy"
               />
               <div className="w-full flex flex-col mt-2 relative z-10">
@@ -349,7 +324,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              whileHover={{ y: -15, scale: 1.03 }}
+              whileHover={{ y: -10, scale: 1.02 }}
               className="cursor-target group w-80 glass-card rounded-3xl shadow-2xl flex flex-col items-center relative overflow-hidden p-6 border border-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[#06B6D4]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -357,8 +332,6 @@ export default function Home() {
                 src="/assets/gallery/event15.jpg"
                 alt="Projects"
                 className="mt-4 mb-6 w-full h-48 rounded-2xl object-cover shadow-xl relative z-10"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
                 loading="lazy"
               />
               <div className="w-full flex flex-col mt-2 relative z-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 interface VideoBackgroundProps {
   videoSrc: string;
@@ -9,7 +9,7 @@ interface VideoBackgroundProps {
   overlayOpacity?: number;
 }
 
-export default function VideoBackground({
+const VideoBackground = memo(function VideoBackground({
   videoSrc,
   fallbackImage = "",
   overlay = true,
@@ -23,27 +23,23 @@ export default function VideoBackground({
     const video = videoRef.current;
     if (!video) return;
 
-    // Fallback timeout - show content after 3 seconds even if video hasn't loaded
+    // Reduced timeout - show content after 1.5 seconds
     const fallbackTimer = setTimeout(() => {
-      console.log('Video timeout - showing content anyway');
       setIsLoaded(true);
-    }, 3000);
+    }, 1500);
 
     const handleCanPlay = () => {
       setIsLoaded(true);
       clearTimeout(fallbackTimer);
-      console.log('Video can play');
     };
 
     const handleLoadedData = () => {
       setIsLoaded(true);
       clearTimeout(fallbackTimer);
-      console.log('Video loaded data');
     };
 
-    const handleError = (e: any) => {
-      console.error('Video error:', e);
-      setIsLoaded(true); // Show content even if video fails
+    const handleError = () => {
+      setIsLoaded(true);
       clearTimeout(fallbackTimer);
     };
 
@@ -51,21 +47,15 @@ export default function VideoBackground({
     video.addEventListener('loadeddata', handleLoadedData);
     video.addEventListener('error', handleError);
 
-    // Force video to start loading
-    video.load();
-
-    // Try to play after a short delay
-    const playTimer = setTimeout(() => {
-      video.play().catch((err) => {
-        console.log('Autoplay prevented:', err);
-      });
-    }, 100);
+    // Try to play immediately
+    video.play().catch(() => {
+      // Autoplay blocked, continue anyway
+    });
 
     return () => {
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('loadeddata', handleLoadedData);
       video.removeEventListener('error', handleError);
-      clearTimeout(playTimer);
       clearTimeout(fallbackTimer);
     };
   }, []);
@@ -79,22 +69,17 @@ export default function VideoBackground({
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden bg-gray-900">
-      {/* Loading placeholder */}
+      {/* Loading placeholder - simplified */}
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 flex items-center justify-center z-10">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white text-sm">Loading video...</p>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 z-10" />
       )}
 
-      {/* Audio Control Button - Simplified */}
+      {/* Audio Control Button */}
       {isLoaded && (
         <button
           onClick={toggleMute}
           className="absolute bottom-8 right-8 z-50 bg-black/50 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/70 transition-colors duration-200 border border-white/20"
-          style={{ willChange: 'transform' }}
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
         >
           {isMuted ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,18 +102,17 @@ export default function VideoBackground({
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         style={{ 
           opacity: isLoaded ? 1 : 0,
           transition: 'opacity 0.5s ease-in-out',
           zIndex: 1,
-          willChange: 'opacity'
         }}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
 
-      {/* Simplified Overlays - Static for better performance */}
+      {/* Static Overlays - No animations for better performance */}
       <div className="absolute inset-0 bg-black/30" style={{ zIndex: 2 }} />
       
       {overlay && (
@@ -149,4 +133,6 @@ export default function VideoBackground({
       />
     </div>
   );
-}
+});
+
+export default VideoBackground;

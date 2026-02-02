@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 interface MerchAsset {
   id: string;
@@ -13,10 +13,44 @@ interface MerchAsset {
   collectionName: string;
 }
 
+// Memoized video component
+const ReelVideo = memo(function ReelVideo({ url }: { url: string }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      video.muted = true;
+      video.play().catch(() => {});
+    };
+
+    const timeoutId = window.setTimeout(tryPlay, 300);
+    return () => window.clearTimeout(timeoutId);
+  }, [url]);
+
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className="w-full h-full object-cover opacity-30"
+      >
+        <source src={url} type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
+    </div>
+  );
+});
+
 export default function MerchPage() {
   const [assets, setAssets] = useState<MerchAsset[]>([]);
   const [loading, setLoading] = useState(true);
-  const reelVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const GOOGLE_FORM_URL = 'https://forms.gle/qiFQ9hECfxS6tcCz5';
 
@@ -63,26 +97,6 @@ export default function MerchPage() {
   const posterAssets = assets.filter(a => a.text?.toLowerCase().includes('poster') || a.text?.toLowerCase().includes('design'));
   const merchDesigns = assets.filter(a => a.text?.toLowerCase().includes('merch'));
 
-  useEffect(() => {
-    if (!reelAsset?.asset) return;
-
-    const video = reelVideoRef.current;
-    if (!video) return;
-
-    const tryPlay = () => {
-      video.muted = true;
-      const playPromise = video.play();
-      if (playPromise && typeof playPromise.then === 'function') {
-        playPromise.catch(() => {
-          // Autoplay may still be blocked on some devices; ignore.
-        });
-      }
-    };
-
-    const timeoutId = window.setTimeout(tryPlay, 300);
-    return () => window.clearTimeout(timeoutId);
-  }, [reelAsset?.id, reelAsset?.asset]);
-
   if (loading) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center bg-black">
@@ -104,44 +118,15 @@ export default function MerchPage() {
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
         {/* Reel Video Background */}
         {reelAsset && reelAsset.asset && (
-          <div className="absolute inset-0 w-full h-full">
-            <video
-              ref={reelVideoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="w-full h-full object-cover opacity-30"
-              key={getAssetUrl(reelAsset)}
-              onCanPlay={() => {
-                const video = reelVideoRef.current;
-                if (video) {
-                  video.muted = true;
-                  video.play().catch(() => {});
-                }
-              }}
-            >
-              <source src={getAssetUrl(reelAsset) || ''} type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
-          </div>
+          <ReelVideo url={getAssetUrl(reelAsset) || ''} />
         )}
 
-        {/* Animated Background Elements */}
+        {/* Simplified Animated Background - only 1 element */}
         <motion.div
           className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-600/20 to-blue-400/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.5, 0.3, 0.5],
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.4, 0.3],
           }}
           transition={{ duration: 5, repeat: Infinity }}
         />

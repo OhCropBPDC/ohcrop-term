@@ -7,21 +7,21 @@ export default function InitialLoader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate asset loading progress
+    // Faster loading progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        return prev + 10;
+        return prev + 20; // Faster increments
       });
-    }, 150);
+    }, 100); // Faster interval
 
-    // Hide loader after assets are loaded
+    // Shorter loader duration
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000); // Reduced from 2000ms to 1000ms
 
     return () => {
       clearInterval(interval);
@@ -36,9 +36,9 @@ export default function InitialLoader() {
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
         >
-          {/* Background pattern */}
+          {/* Static background pattern */}
           <div className="absolute inset-0 opacity-10">
             <div
               className="absolute inset-0"
@@ -50,31 +50,29 @@ export default function InitialLoader() {
           </div>
 
           <div className="relative flex flex-col items-center gap-8 z-10">
-            {/* Animated logo */}
+            {/* Simplified animated logo */}
             <motion.div
               className="relative"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
-              {/* Pulsing glow */}
+              {/* Simplified glow */}
               <motion.div
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-2xl"
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.5, 0.8, 0.5],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.5, 0.7, 0.5],
                 }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               />
 
               {/* Logo */}
               <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 flex items-center justify-center shadow-2xl border-4 border-white/30">
-                <motion.img
+                <img
                   src="/assets/ohcrop.png"
                   alt="OhCrop Logo"
                   className="w-16 h-16 object-contain drop-shadow-lg"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
                   style={{ filter: 'brightness(1.1) contrast(1.1)' }}
                 />
               </div>
@@ -85,7 +83,7 @@ export default function InitialLoader() {
               className="text-center"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.2 }}
             >
               <h1 className="text-4xl font-bold text-white mb-2">Oh Crop</h1>
               <p className="text-white/70 text-sm">Design Club</p>
@@ -98,29 +96,17 @@ export default function InitialLoader() {
                   className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.1 }}
                 />
               </div>
-              <p className="text-white/60 text-sm text-center mt-2">{progress}%</p>
-            </div>
-
-            {/* Loading dots */}
-            <div className="flex gap-2">
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  className="w-2 h-2 rounded-full bg-white"
-                  animate={{
-                    y: [0, -10, 0],
-                    opacity: [0.3, 1, 0.3],
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    repeat: Infinity,
-                    delay: i * 0.15,
-                  }}
-                />
-              ))}
+              <motion.p
+                className="text-white/60 text-xs text-center mt-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                {progress}%
+              </motion.p>
             </div>
           </div>
         </motion.div>
