@@ -337,7 +337,8 @@ export default function BubbleMenu({
             'inset-0',
             'flex items-center justify-center',
             'pointer-events-none',
-            'z-[1000]'
+            'z-[1000]',
+            'bg-black/70 backdrop-blur-md'
           ].join(' ')}
           aria-hidden={!isMenuOpen}
         >
