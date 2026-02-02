@@ -18,7 +18,7 @@ export default function MerchPage() {
   const [loading, setLoading] = useState(true);
   const reelVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  const GOOGLE_FORM_URL = 'https://forms.google.com/your-form-url';
+  const GOOGLE_FORM_URL = 'https://forms.gle/qiFQ9hECfxS6tcCz5';
 
   useEffect(() => {
     const fetchAssets = async () => {
