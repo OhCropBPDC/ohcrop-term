@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useEffect, useState } from "react";
 
 interface FloatingShapeProps {
   delay?: number;
@@ -48,6 +48,8 @@ export const FloatingShape = memo(function FloatingShape({
 
 // Heavily optimized ParticleField - reduced to 8 particles
 export const ParticleField = memo(function ParticleField() {
+  const [mounted, setMounted] = useState(false);
+  
   const particles = useMemo(() => 
     Array.from({ length: 8 }, (_, i) => ({
       id: i,
@@ -55,8 +57,14 @@ export const ParticleField = memo(function ParticleField() {
       y: Math.random() * 100,
       delay: Math.random() * 2,
     })),
-    []
+    [mounted]
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
